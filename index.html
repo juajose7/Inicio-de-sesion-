@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registro</h2>
+    <form id="registerForm">
+        <div class="form-group">
+            <label for="registerName">Nombre:</label>
+            <input type="text" id="registerName" required>
+        </div>
+        <div class="form-group">
+            <label for="registerSurname">Apellido:</label>
+            <input type="text" id="registerSurname" required>
+        </div>
+        <div class="form-group">
+            <label for="registerBirthdate">Fecha de Nacimiento:</label>
+            <input type="date" id="registerBirthdate" required>
+        </div>
+        <div class="form-group">
+            <label for="registerGender">Género:</label>
+            <select id="registerGender" required>
+                <option value="">Seleccione</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="registerEmail">Correo Electrónico:</label>
+            <input type="email" id="registerEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="registerPassword">Contraseña:</label>
+            <input type="password" id="registerPassword" required>
+            <div class="error" id="passwordError"></div>
+        </div>
+        <button type="submit">Registrarse</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('registerName').value;
+        const surname = document.getElementById('registerSurname').value;
+        const birthdate = document.getElementById('registerBirthdate').value;
+        const gender = document.getElementById('registerGender').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+
+        const passwordError = document.getElementById('passwordError');
+        const passwordRegex = /^(?=.*[0-9])(?=.*[\W_]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres, un número y un carácter especial.';
+            return;
+        } else {
+            passwordError.textContent = ''; 
+        }
+
+        localStorage.setItem('name', name);
+        localStorage.setItem('surname', surname);
+        localStorage.setItem('birthdate', birthdate);
+        localStorage.setItem('gender', gender);
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+
+        window.location.href = 'login.html';
+    });
+</script>
+
+</body>
+</html>

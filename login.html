@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Inicio de Sesión</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="loginEmail">Correo Electrónico:</label>
+            <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Contraseña:</label>
+            <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit">Iniciar Sesión</button>
+        <div class="error" id="errorMessage"></div>
+    </form>
+</div>
+
+<script>
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const storedEmail = localStorage.getItem('email');
+        const storedPassword = localStorage.getItem('password');
+
+        if (email === storedEmail && password === storedPassword) {
+            alert('Inicio de sesión exitoso!');
+            attempts = 0; 
+            document.getElementById('errorMessage').textContent = '';
+        } else {
+            attempts++;
+            document.getElementById('errorMessage').textContent = 'Correo electrónico o contraseña incorrectos.';
+
+            if (attempts >= maxAttempts) {
+                alert('Demasiados intentos fallidos. El formulario se bloqueará.');
+                document.getElementById('loginForm').reset(); 
+                document.getElementById('loginForm').querySelector('button').disabled = true; 
+                document.getElementById('loginEmail').disabled = true;
+                document.getElementById('loginPassword').disabled = true;
+            }
+        }
+        window.location.href = 'index3.html';
+    });
+</script>
+
+</body>
+</html>
